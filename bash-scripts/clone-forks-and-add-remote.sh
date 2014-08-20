@@ -11,12 +11,12 @@
 #       should also contain a new line. Otherwise the last line will be omitted.
 #
 
-#TODO: can extract the list of forks from the GitHub API.
+# TODO: can extract the list of forks from the GitHub API.
 
 FILE=$1
-#Read GitHub user name from the input, if not given use my user name as default
+# Read GitHub user name from the input, if not given use my user name as default
 USER_NAME=${2:-"GayashanNA"}
-#Read GitHub organization name from the input, if not given use wso2-dev as default
+# Read GitHub organization name from the input, if not given use wso2-dev as default
 ORG_NAME=${3:-"wso2-dev"}
 USER_GIT_URL_PREFIX="https://github.com/${USER_NAME}/"
 UPSTREAM_GIT_URL_PREFIX="git@github.com:${ORG_NAME}/"
@@ -26,6 +26,11 @@ GIT_SUFFIX=".git"
 #for repo in "${repos[@]}"; do
 
 while read -r line; do
+    # if line is empty, exit
+    if [[ -z "${line}" ]]; then
+        exit 1
+    fi    
+    
     repo=$line
     my_git_repo=${USER_GIT_URL_PREFIX}${repo}${GIT_SUFFIX}
     upstream_git_repo=${UPSTREAM_GIT_URL_PREFIX}${repo}${GIT_SUFFIX}
@@ -33,12 +38,12 @@ while read -r line; do
 
     echo
     echo "Clonning : ${my_git_repo}"
-    #git clone ${my_git_repo}
+    git clone ${my_git_repo}
 
     echo "Adding remote ${upstream} to: ${upstream_git_repo}"
     cd ${repo}
-    #git remote add ${upstream} ${upstream_git_repo}
-    #git remote -v
+    git remote add ${upstream} ${upstream_git_repo}
+    git remote -v
     cd ../
     echo "############################ Done ########################################"
 done < $FILE
