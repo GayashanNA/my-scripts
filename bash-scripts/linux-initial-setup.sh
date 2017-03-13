@@ -44,6 +44,34 @@ if [ "$isYesToAll" == "Y" ] || [ "$isGit" != "n" ]; then
 	git config --list
 fi
 echo
+echo Do you want to download and setup jdk 8? Y/n
+read downloadJava8
+if [ "$isYesToAll" == "Y" ] || [ "$downloadJava8" != "n" ]; then
+    wget -P /tmp/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz
+    tar -xvzf /tmp/jdk-8u121-linux-x64.tar.gz
+    sudo mkdir /usr/lib/jvm
+    sudo mv /tmp/jdk1.8.0_121 /usr/lib/jvm/
+    sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_121/bin/javac 1
+    sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_121/bin/java 1
+    sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/jdk1.8.0_121/bin/javaws 1
+    
+    ls -la /etc/alternatives/java*
+fi
+
+echo Do you want to download and setup jdk 7? Y/n
+read downloadJava7
+if [ "$isYesToAll" == "Y" ] || [ "$downloadJava7" != "n" ]; then
+    wget -P /tmp/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz
+    tar -xvzf /tmp/jdk-7u80-linux-x64.tar.gz
+    sudo mkdir /usr/lib/jvm
+    sudo mv /tmp/jdk1.7.0_80 /usr/lib/jvm/
+    sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.7.0_80/bin/javac 1
+    sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.7.0_80/bin/java 1
+    sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/jdk1.7.0_80/bin/javaws 1
+    
+    ls -la /etc/alternatives/java*
+fi
+echo
 echo Do you want to install darktable? Y/n
 read isDarktable
 if [ "$isYesToAll" == "Y" ] || [ "$isDarktable" != "n" ]; then
@@ -60,5 +88,9 @@ echo
 echo Cleaning packages that are not required anymore
 sudo apt-get -y -qq autoremove
 echo
+echo Choose default java
+sudo update-alternatives --config javac
+sudo update-alternatives --config java
+sudo update-alternatives --config javaws
 echo Initial setup is completed!
 echo Thank you.
