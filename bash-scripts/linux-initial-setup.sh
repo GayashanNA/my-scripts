@@ -45,7 +45,10 @@ if [ "$isYesToAll" == "Y" ] || [ "$isGit" != "n" ]; then
 	read gitEmail
 	git config --global user.email "$gitEmail"
 	git config --global core.editor vim
-	git config --list
+	git config --global credential.helper cache
+    # set the credential cache to timeout after 5hrs.
+    git config --global credential.helper 'cache --timeout=18000'
+    git config --list
 fi
 echo
 # jdk 1.8.0_121 is the latest jdk 8 release as of March 2017. So if you want the latest jdk, fix the url and directories that follow accordingly with the latest release version number..
