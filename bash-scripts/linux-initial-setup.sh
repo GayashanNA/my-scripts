@@ -1,5 +1,5 @@
 # if you want to skip the questions, pass "Y" as a command line argument when executing the script to mark YES TO ALL.
-isYesToAll=$1
+yesToAll=$1
 clear
 echo I am setting up the system...please sit back and relax, and press Y/n here and there.
 sudo apt-get update -qq && sudo apt-get upgrade -y -qq
@@ -17,8 +17,8 @@ wget -P /tmp/ https://raw.githubusercontent.com/GayashanNA/myvim/master/.vimrc
 cp -v /tmp/.vimrc ~/.vimrc
 echo
 echo Do you want to install Google chrome? Y/n
-read isGoogleChrome
-if [ "$isYesToAll" == "Y" ] || [ "$isGoogleChrome" != "n" ]; then
+read installGoogleChrome
+if [ "$yesToAll" == "Y" ] || [ "$installGoogleChrome" != "n" ]; then
 	sudo apt-get -y -qq install libxss1 libappindicator1 libindicator7
 	wget -P /tmp/ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo dpkg -i /tmp/google-chrome*.deb
@@ -35,9 +35,9 @@ echo installing video players
 sudo apt-get install -y -qq vlc kodi
 echo
 echo Do you want to install git and set it up? Y/n
-read isGit
-if [ "$isYesToAll" == "Y" ] || [ "$isGit" != "n" ]; then
-	sudo apt-get -y -qq install git
+read installGit
+if [ "$yesToAll" == "Y" ] || [ "$installGit" != "n" ]; then
+	sudo apt-get -y -qq install git gitk
 	echo What is your Git user name?
 	read gitUserName
 	git config --global user.name "$gitUserName"
@@ -56,7 +56,7 @@ echo
 # If this part of the script is not working, then check the download url in the wget.
 echo Do you want to download and setup jdk 8? Y/n
 read downloadJava8
-if [ "$isYesToAll" == "Y" ] || [ "$downloadJava8" != "n" ]; then
+if [ "$yesToAll" == "Y" ] || [ "$downloadJava8" != "n" ]; then
     wget -P /tmp/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz
     tar -xvzf /tmp/jdk-8u121-linux-x64.tar.gz
     sudo mkdir /usr/lib/jvm
@@ -70,7 +70,7 @@ fi
 # jdk 1.7.0_80 is the last jdk 7 release from oracle. So if this part of the script is not working, then most probably the download url is broken.
 echo Do you want to download and setup jdk 7? Y/n
 read downloadJava7
-if [ "$isYesToAll" == "Y" ] || [ "$downloadJava7" != "n" ]; then
+if [ "$yesToAll" == "Y" ] || [ "$downloadJava7" != "n" ]; then
     wget -P /tmp/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz
     tar -xvzf /tmp/jdk-7u80-linux-x64.tar.gz
     sudo mkdir /usr/lib/jvm
@@ -83,8 +83,8 @@ if [ "$isYesToAll" == "Y" ] || [ "$downloadJava7" != "n" ]; then
 fi
 echo
 echo Do you want to install darktable? Y/n
-read isDarktable
-if [ "$isYesToAll" == "Y" ] || [ "$isDarktable" != "n" ]; then
+read installDarktable
+if [ "$yesToAll" == "Y" ] || [ "$installDarktable" != "n" ]; then
 	sudo apt-get install -y -qq darktable
 fi
 echo Installing python utulities
@@ -98,9 +98,11 @@ echo
 echo Cleaning packages that are not required anymore
 sudo apt-get -y -qq autoremove
 echo
-echo Choose default java
-sudo update-alternatives --config javac
-sudo update-alternatives --config java
-sudo update-alternatives --config javaws
+if [ "$downloadJava7" != "n" ] || [ "$downloadJava8" != "n" ]; then
+    echo Choose default java
+    sudo update-alternatives --config javac
+    sudo update-alternatives --config java
+    sudo update-alternatives --config javaws
+fi
 echo Initial setup is completed!
 echo Thank you.
