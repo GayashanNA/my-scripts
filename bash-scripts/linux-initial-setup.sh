@@ -1,3 +1,4 @@
+# if you want to skip the questions, pass "Y" as a command line argument when executing the script to mark YES TO ALL.
 isYesToAll=$1
 clear
 echo I am setting up the system...please sit back and relax, and press Y/n here and there.
@@ -21,6 +22,9 @@ if [ "$isYesToAll" == "Y" ] || [ "$isGoogleChrome" != "n" ]; then
 	sudo apt-get -y -qq install libxss1 libappindicator1 libindicator7
 	wget -P /tmp/ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo dpkg -i /tmp/google-chrome*.deb
+    # sometimes the chrome installation gives an error with missing packages.
+    # I'm lazy to catch that error and rerun chrome installation.
+    # Instead I'll rerun chrome installation always. :)
 	sudo apt-get -y -qq install -f
 	sudo dpkg -i /tmp/google-chrome*.deb
 fi
@@ -44,6 +48,9 @@ if [ "$isYesToAll" == "Y" ] || [ "$isGit" != "n" ]; then
 	git config --list
 fi
 echo
+# jdk 1.8.0_121 is the latest jdk 8 release as of March 2017. So if you want the latest jdk, fix the url and directories that follow accordingly with the latest release version number..
+# Unfortunately oracle do not provide a direct download link for the latest jdk. :(
+# If this part of the script is not working, then check the download url in the wget.
 echo Do you want to download and setup jdk 8? Y/n
 read downloadJava8
 if [ "$isYesToAll" == "Y" ] || [ "$downloadJava8" != "n" ]; then
@@ -57,7 +64,7 @@ if [ "$isYesToAll" == "Y" ] || [ "$downloadJava8" != "n" ]; then
     
     ls -la /etc/alternatives/java*
 fi
-
+# jdk 1.7.0_80 is the last jdk 7 release from oracle. So if this part of the script is not working, then most probably the download url is broken.
 echo Do you want to download and setup jdk 7? Y/n
 read downloadJava7
 if [ "$isYesToAll" == "Y" ] || [ "$downloadJava7" != "n" ]; then
