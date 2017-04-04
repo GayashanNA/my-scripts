@@ -1,5 +1,5 @@
 # if you want to skip the questions, pass "Y" as a command line argument when executing the script to mark YES TO ALL.
-yesToAll=$1
+yesToAll=${1}
 clear
 echo I am setting up the system...please sit back and relax, and press Y/n here and there.
 sudo apt-get update -qq && sudo apt-get upgrade -y -qq
@@ -11,7 +11,7 @@ sudo apt-get -y dist-upgrade
 sudo apt-get -y -qq install -f
 echo
 echo Installing required software packages
-sudo apt-get -y -qq install vim
+sudo apt-get -y -qq install vim htop tree
 echo Setting up vimrc file
 wget -P /tmp/ https://raw.githubusercontent.com/GayashanNA/myvim/master/.vimrc
 cp -v /tmp/.vimrc ~/.vimrc
@@ -86,6 +86,14 @@ echo Do you want to install darktable? Y/n
 read installDarktable
 if [ "$yesToAll" == "Y" ] || [ "$installDarktable" != "n" ]; then
 	sudo apt-get install -y -qq darktable
+fi
+echo Do you want to install spotify? Y/n
+read installSpotify
+if [ "$installSpotify" == "Y" ]; then
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+    echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+    sudo apt-get update
+    sudo apt-get -y -qq install spotify-client
 fi
 echo Installing python utulities
 sudo apt-get -y -qq install python-pip
