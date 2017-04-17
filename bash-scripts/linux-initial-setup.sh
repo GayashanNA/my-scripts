@@ -3,13 +3,13 @@
 YESTOALL=${1}
 clear
 echo I am setting up the system...please sit back and relax, and press Y/n here and there.
-sudo apt-get update -qq && sudo apt-get upgrade -y -qq
-echo Installing xubuntu restricted extras
-sudo apt-get install -y -qq xubuntu-restricted-extras libavcodec-extra
-echo
-echo Fix any broken packages
+sudo apt-get update -qq
 sudo apt-get -y dist-upgrade
 sudo apt-get -y -qq install -f
+sudo apt autoremove
+
+#echo Installing xubuntu restricted extras
+#sudo apt-get install -y -qq xubuntu-restricted-extras libavcodec-extra
 echo
 echo Installing required software packages
 sudo apt-get -y -qq install vim htop tree
