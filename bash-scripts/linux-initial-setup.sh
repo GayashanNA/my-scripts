@@ -23,14 +23,14 @@ wget -P /tmp/vim ${__vim_config_dl_url}
 cp -v /tmp/vim/.vimrc ~/.vimrc
 if [ "${__google_chrome}" == "Y" ]; then
     echo Installing Google Chrome
-	sudo apt-get -y -qq install libxss1 libappindicator1 libindicator7
-	wget -P /tmp/chrome ${__google_chrome_dl_url}
-	sudo dpkg -i /tmp/chrome/google-chrome*.deb
+    sudo apt-get -y -qq install libxss1 libappindicator1 libindicator7
+    wget -P /tmp/chrome ${__google_chrome_dl_url}
+    sudo dpkg -i /tmp/chrome/google-chrome*.deb
     # sometimes the chrome installation gives an error with missing packages.
     # I'm lazy to catch that error and rerun chrome installation.
     # Instead I'll rerun chrome installation always. :)
-	sudo apt-get -y -qq install -f
-	sudo dpkg -i /tmp/chrome/google-chrome*.deb
+    sudo apt-get -y -qq install -f
+    sudo dpkg -i /tmp/chrome/google-chrome*.deb
 fi
 if [ "${__kodi}" == "Y" ]; then
     echo Installing Kodi
@@ -39,11 +39,11 @@ if [ "${__kodi}" == "Y" ]; then
 fi
 if [ "${__git}" == "Y" ]; then
     echo Installing and setting up git
-	sudo apt-get -y -qq install git gitk
-	git config --global user.name "${__git_username}"
-	git config --global user.email "${__git_email}"
-	git config --global core.editor vim
-	git config --global credential.helper cache
+    sudo apt-get -y -qq install git gitk
+    git config --global user.name "${__git_username}"
+    git config --global user.email "${__git_email}"
+    git config --global core.editor vim
+    git config --global credential.helper cache
     # set the credential cache to timeout after 5hrs.
     git config --global credential.helper 'cache --timeout='${__git_cache_timeout}
     git config --list
@@ -54,30 +54,30 @@ fi
 if [ "${__java8}" == "Y" ]; then
     echo Installing and setting up java 8
     wget -P /tmp/j8/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" ${__java8_dl_url}
-    tar -xvzf /tmp/j8/jdk-8u121-linux-x64.tar.gz
+    tar -xvzf /tmp/j8/jdk-8*.tar.gz
     sudo mkdir /usr/lib/jvm
-    sudo mv /tmp/j8/jdk1.8.0_121 /usr/lib/jvm/
-    sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_121/bin/javac 1
-    sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_121/bin/java 1
-    sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/jdk1.8.0_121/bin/javaws 1
-    
+    sudo mv /tmp/j8/${__java8_dl_extract_dir} /usr/lib/jvm/
+    sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/${__java8_dl_extract_dir}/bin/javac 1
+    sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/${__java8_dl_extract_dir}/bin/java 1
+    sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/${__java8_dl_extract_dir}/bin/javaws 1
     ls -la /etc/alternatives/java*
 fi
 # jdk 1.7.0_80 is the last jdk 7 release from oracle. So if this part of the script is not working, then most probably the download url is broken.
 if [ "${__java7}" == "Y" ]; then
     echo Installing and setting up java 7
     wget -P /tmp/j7/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" ${__java7_dl_url}
+    # no need to generalize the file name since this is the last version to be released.
     tar -xvzf /tmp/j7/jdk-7u80-linux-x64.tar.gz
     sudo mkdir /usr/lib/jvm
-    sudo mv /tmp/j7/jdk1.7.0_80 /usr/lib/jvm/
-    sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.7.0_80/bin/javac 1
-    sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.7.0_80/bin/java 1
-    sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/jdk1.7.0_80/bin/javaws 1
+    sudo mv /tmp/j7/${__java7_dl_extract_dir} /usr/lib/jvm/
+    sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/${__java7_dl_extract_dir}/bin/javac 1
+    sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/${__java7_dl_extract_dir}/bin/java 1
+    sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/${__java7_dl_extract_dir}/bin/javaws 1
     ls -la /etc/alternatives/java*
 fi
 if [ "${__dark_table}" == "Y" ]; then
     echo Installing Darktable
-	sudo apt-get install -y -qq darktable
+    sudo apt-get install -y -qq darktable
 fi
 if [ "${__spotify}" == "Y" ]; then
     echo Installing spotify
@@ -98,14 +98,14 @@ echo Cleaning packages that are not required anymore
 sudo apt-get -y -qq autoremove
 if [ "${__default_java}" == "7" ]; then
     echo Default is java 7
-    sudo update-alternatives --set javac /usr/lib/jvm/jdk1.7.0_80/bin/javac
-    sudo update-alternatives --set java /usr/lib/jvm/jdk1.7.0_80/bin/java
-    sudo update-alternatives --set javaws /usr/lib/jvm/jdk1.7.0_80/bin/javaws
+    sudo update-alternatives --set javac /usr/lib/jvm/${__java7_dl_extract_dir}/bin/javac
+    sudo update-alternatives --set java /usr/lib/jvm/${__java7_dl_extract_dir}/bin/java
+    sudo update-alternatives --set javaws /usr/lib/jvm/${__java7_dl_extract_dir}/bin/javaws
 elif [ "${__default_java}" == "8" ]; then
     echo Default is java 8
-    sudo update-alternatives --set javac /usr/lib/jvm/jdk1.8.0_121/bin/javac
-    sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0_121/bin/java
-    sudo update-alternatives --set javaws /usr/lib/jvm/jdk1.8.0_121/bin/javaws
+    sudo update-alternatives --set javac /usr/lib/jvm/${__java8_dl_extract_dir}/bin/javac
+    sudo update-alternatives --set java /usr/lib/jvm/${__java8_dl_extract_dir}/bin/java
+    sudo update-alternatives --set javaws /usr/lib/jvm/${__java8_dl_extract_dir}/bin/javaws
 fi
 echo Initial setup is completed!
 echo Thank you.
