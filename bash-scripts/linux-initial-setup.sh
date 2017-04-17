@@ -1,5 +1,6 @@
+#!/bin/bash
 # if you want to skip the questions, pass "Y" as a command line argument when executing the script to mark YES TO ALL.
-yesToAll=${1}
+YESTOALL=${1}
 clear
 echo I am setting up the system...please sit back and relax, and press Y/n here and there.
 sudo apt-get update -qq && sudo apt-get upgrade -y -qq
@@ -18,7 +19,7 @@ cp -v /tmp/.vimrc ~/.vimrc
 echo
 echo Do you want to install Google chrome? Y/n
 read installGoogleChrome
-if [ "$yesToAll" == "Y" ] || [ "$installGoogleChrome" != "n" ]; then
+if [ "$YESTOALL" == "Y" ] || [ "$installGoogleChrome" != "n" ]; then
 	sudo apt-get -y -qq install libxss1 libappindicator1 libindicator7
 	wget -P /tmp/ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo dpkg -i /tmp/google-chrome*.deb
@@ -36,7 +37,7 @@ sudo apt-get install -y -qq vlc kodi
 echo
 echo Do you want to install git and set it up? Y/n
 read installGit
-if [ "$yesToAll" == "Y" ] || [ "$installGit" != "n" ]; then
+if [ "$YESTOALL" == "Y" ] || [ "$installGit" != "n" ]; then
 	sudo apt-get -y -qq install git gitk
 	echo What is your Git user name?
 	read gitUserName
@@ -56,7 +57,7 @@ echo
 # If this part of the script is not working, then check the download url in the wget.
 echo Do you want to download and setup jdk 8? Y/n
 read downloadJava8
-if [ "$yesToAll" == "Y" ] || [ "$downloadJava8" != "n" ]; then
+if [ "$YESTOALL" == "Y" ] || [ "$downloadJava8" != "n" ]; then
     wget -P /tmp/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz
     tar -xvzf /tmp/jdk-8u121-linux-x64.tar.gz
     sudo mkdir /usr/lib/jvm
@@ -70,7 +71,7 @@ fi
 # jdk 1.7.0_80 is the last jdk 7 release from oracle. So if this part of the script is not working, then most probably the download url is broken.
 echo Do you want to download and setup jdk 7? Y/n
 read downloadJava7
-if [ "$yesToAll" == "Y" ] || [ "$downloadJava7" != "n" ]; then
+if [ "$YESTOALL" == "Y" ] || [ "$downloadJava7" != "n" ]; then
     wget -P /tmp/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz
     tar -xvzf /tmp/jdk-7u80-linux-x64.tar.gz
     sudo mkdir /usr/lib/jvm
@@ -84,7 +85,7 @@ fi
 echo
 echo Do you want to install darktable? Y/n
 read installDarktable
-if [ "$yesToAll" == "Y" ] || [ "$installDarktable" != "n" ]; then
+if [ "$YESTOALL" == "Y" ] || [ "$installDarktable" != "n" ]; then
 	sudo apt-get install -y -qq darktable
 fi
 echo Do you want to install spotify? Y/n
