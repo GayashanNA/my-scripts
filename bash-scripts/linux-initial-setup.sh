@@ -17,7 +17,7 @@ if [ "${__xubuntu_restricted_extras}" == "Y" ]; then
     sudo apt-get install -y -qq xubuntu-restricted-extras libavcodec-extra
 fi
 echo INFO: Installing required software packages
-sudo apt-get -y -qq install vim vlc htop tree ranger
+sudo apt-get -y -qq install ${__applications_to_install}
 echo INFO: Setting up vimrc file
 wget -P /tmp/vim ${__vim_config_dl_url} 
 cp -v /tmp/vim/.vimrc ~/.vimrc
