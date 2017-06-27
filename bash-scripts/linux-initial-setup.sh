@@ -55,7 +55,7 @@ fi
 if [ "${__java8}" == "Y" ]; then
     echo INFO: Installing and setting up java 8
     wget -P /tmp/j8/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" ${__java8_dl_url}
-    tar -xvzf /tmp/j8/jdk-8*.tar.gz
+    tar -xvzf /tmp/j8/jdk-8*.tar.gz -C /tmp/j8/
     sudo mkdir /usr/lib/jvm
     sudo mv /tmp/j8/${__java8_dl_extract_dir} /usr/lib/jvm/
     sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/${__java8_dl_extract_dir}/bin/javac 1
@@ -69,7 +69,7 @@ if [ "${__java7}" == "Y" ]; then
     echo INFO: Installing and setting up java 7
     wget -P /tmp/j7/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" ${__java7_dl_url}
     # no need to generalize the file name since this is the last version to be released.
-    tar -xvzf /tmp/j7/jdk-7u80-linux-x64.tar.gz
+    tar -xvzf /tmp/j7/jdk-7u80-linux-x64.tar.gz -C /tmp/j7/
     sudo mkdir /usr/lib/jvm
     sudo mv /tmp/j7/${__java7_dl_extract_dir} /usr/lib/jvm/
     sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/${__java7_dl_extract_dir}/bin/javac 1
