@@ -1,0 +1,6 @@
+.idea/
+*.png
+*.csv
+*.pyc
+config.py
+*.json

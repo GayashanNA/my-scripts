@@ -11,3 +11,4 @@ Various scripts that i need to use every now and then.
 
 3. script to initially setup my xubuntu linux distribution (for more information look at the script) : [`bash-scripts/linux-initial-setup.sh`](https://github.com/GayashanNA/my-scripts/blob/master/bash-scripts/linux-initial-setup.sh)
 
+4. script to download files from a file containing links : [`bash-scripts/aria2files.sh`](https://github.com/GayashanNA/my-scripts/blob/master/bash-scripts/aria2files.sh)
