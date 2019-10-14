@@ -63,15 +63,25 @@ elif [ "${__default_java}" == "8" ]; then
 fi
 
 mkdir /home/ubuntu/bin/
+mkdir /home/ubuntu/bin/zookeeper/
+mkdir /home/ubuntu/bin/storm/
+mkdir /home/ubuntu/bin/kafka/
 cd /home/ubuntu/bin/
 
-wget -P /tmp/ http://apache.melbourneitmirror.net/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz
-tar -xvzf /tmp/zookeeper-3.4.10.tar.gz -C /tmp/
-mv /tmp/zookeeper-3.4.10/ /home/ubuntu/bin/zookeeper/
+wget -P /tmp/ http://apache.mirror.amaze.com.au/zookeeper/zookeeper-3.5.5/apache-zookeeper-3.5.5.tar.gz 
+tar -xvzf /tmp/apache-zookeeper-3.5.5.tar.gz -C /tmp/
+mv /tmp/apache-zookeeper-3.5.5/ /home/ubuntu/bin/zookeeper/
 
-wget -P /tmp/ https://github.com/apache/storm/archive/v1.1.0.tar.gz
-tar -xvzf /tmp/v1.1.0.tar.gz -C /tmp/
-mv /tmp/storm-1.1.0/ /home/ubuntu/bin/storm/
+wget -P /tmp/ https://archive.apache.org/dist/storm/apache-storm-0.10.0/apache-storm-0.10.0.tar.gz
+tar -xvzf /tmp/apache-storm-0.10.0.tar.gz -C /tmp/
+mv /tmp/apache-storm-0.10.0/ /home/ubuntu/bin/storm/
+
+wget -P /tmp/ http://apache.mirror.amaze.com.au/kafka/2.2.1/kafka-2.2.1-src.tgz
+tar -xvzf /tmp/kafka-2.2.1-src.tgz -C /tmp/
+mv /tmp/kafka-2.2.1-src/ /home/ubuntu/bin/kafka/
+
+wget -P /tmp/ https://repo.mongodb.org/apt/ubuntu/dists/xenial/mongodb-org/4.2/multiverse/binary-amd64/mongodb-org-server_4.2.0_amd64.deb
+sudo dpkg -i /tmp/mongodb-org-server_4.2.0_amd64.deb
 
 echo INFO: Initial setup is completed!
 echo "export JAVA_HOME=/usr/lib/jvm/${__java8_dl_extract_dir}" >> /home/ubuntu/.bashrc
