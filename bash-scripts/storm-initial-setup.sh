@@ -17,10 +17,6 @@ sudo apt-get -y -qq install ${__applications_to_install}
 echo INFO: Setting up vimrc file
 wget -P /tmp/vim ${__vim_config_dl_url} 
 cp -v /tmp/vim/.vimrc ~/.vimrc
-# jdk 1.8.0_121 is the latest jdk 8 release as of March 2017. So if you want the latest jdk, 
-# fix the url and directories that follow accordingly with the latest release version number.
-# Unfortunately oracle do not provide a direct download link for the latest jdk. :(
-# If this part of the script is not working, then check the download url in the wget.
 if [ "${__java8}" == "Y" ]; then
     echo INFO: Installing and setting up java 8
     wget -P /tmp/j8/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" ${__java8_dl_url}

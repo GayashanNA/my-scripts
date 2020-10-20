@@ -10,7 +10,8 @@ LANG=en_US.UTF-8
 
 THRESHOLD=${1:-"1024"}
 INTERVAL=${2:-"300"}
-POPUP_DELAY=999999
+POPUP_DELAY=999
+echo "How to use: alertoom <threshold> <interval>"
 echo "You will receive an alert when available memory is less than ${THRESHOLD}."
 # sleep some time so the shell starts properly
 sleep 30
